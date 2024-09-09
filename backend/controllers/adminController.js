@@ -85,7 +85,7 @@ exports.updateOutpassStatus = async (req, res) => {
     const updatedOutpass = await Outpass.findByIdAndUpdate(
       _id,
       { status },
-      { new: true } // Return the updated document
+      { new: true }
     );
 
     if (!updatedOutpass) {
