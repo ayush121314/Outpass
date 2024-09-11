@@ -22,5 +22,5 @@ app.listen(PORT, () => {
 });
 
 app.use(cors({
-  origin: 'https://outpass-zeta.vercel.app'
+  origin: 'https://outpass-zeta.vercel.app/'
 }));
