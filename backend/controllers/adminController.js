@@ -3,10 +3,8 @@ const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 // Hardcoded credentials
 const hardcodedEmail = 'admin1@gmail.com';
-// Hash the hardcoded password (You can pre-generate this hash)
-const hardcodedPasswordHash = bcrypt.hashSync('admin1password', 10); // bcrypt hash of 'admin1password'
-const Outpass = require('../models/Outpass'); // Assuming you have the Outpass model defined
-
+const hardcodedPasswordHash = bcrypt.hashSync('admin1password', 10); 
+const Outpass = require('../models/Outpass'); 
 exports.loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -20,8 +18,8 @@ exports.loginAdmin = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, salt);
 
       admin = new Admin({
-        email,
-        password: hashedPassword, // Save the hashed password
+        hardcodedEmail,
+        password: hardcodedPasswordHash, // Save the hashed password
       });
 
       await admin.save();
