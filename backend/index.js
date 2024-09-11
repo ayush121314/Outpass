@@ -14,13 +14,14 @@ app.use(express.json());
 
 app.use('/api/student', studentRoutes);
 app.use('/api/admin', adminRoutes);
-
-
+app.get('/', (req, res) => {
+  res.send(`RUNNING ON ${PORT}`);
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
 app.use(cors({
-  origin: 'https://outpass-zeta.vercel.app/'
+  origin: 'https://outpass-zeta.vercel.app'
 }));
