@@ -3,13 +3,17 @@ const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 // Hardcoded credentials
 const hardcodedEmail = 'admin1@gmail.com';
-const hardcodedPasswordHash = bcrypt.hashSync('admin1password', 10); 
-const Outpass = require('../models/Outpass'); 
+// Hash the hardcoded password (You can pre-generate this hash)
+const hardcodedPasswordHash = bcrypt.hashSync('admin1password', 10); // bcrypt hash of 'admin1password'
+const Outpass = require('../models/Outpass'); // Assuming you have the Outpass model defined
+
 exports.loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     // Check if the email exists in the database
+    if(email!=hardcodedEmail)
+    return res.status(400).json({ message: 'Invalid email or password' });
     let admin = await Admin.findOne({ email });
 
     if (!admin) {
@@ -18,8 +22,8 @@ exports.loginAdmin = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, salt);
 
       admin = new Admin({
-        hardcodedEmail,
-        password: hardcodedPasswordHash, // Save the hashed password
+        email,
+        password: hashedPassword, // Save the hashed password
       });
 
       await admin.save();
@@ -83,7 +87,7 @@ exports.updateOutpassStatus = async (req, res) => {
     const updatedOutpass = await Outpass.findByIdAndUpdate(
       _id,
       { status },
-      { new: true }
+      { new: true } // Return the updated document
     );
 
     if (!updatedOutpass) {
