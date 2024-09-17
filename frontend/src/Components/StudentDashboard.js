@@ -267,115 +267,140 @@ function StudentDashboard() {
   };
 
   return (
-    <div className="p-10 max-w-screen-xl mx-auto">
-      <div className="flex gap-10 justify-between">
-        <h1 className="text-4xl text-center w-full bg-blue-900 text-white py-5 mb-10 rounded-lg">
-          Welcome, {user?.name}
-        </h1>
-        <div className="relative">
-          <button
-            onClick={() => setProfileView(!profileView)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md transition-all duration-300 ease-in-out"
-          >
-            Profile
-          </button>
-          {profileView && (
-            <div className="absolute top-12 right-0 bg-white border border-gray-300 rounded-lg shadow-lg p-4 mt-2 z-10">
-              <button
-                onClick={logout}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow-md transition-all duration-300 ease-in-out w-full text-center"
-              >
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
+    <div className="p-4 sm:p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center bg-gradient-to-r from-blue-800 to-blue-600  py-5 rounded-lg shadow-lg">
+        Welcome, {user?.name}
+      </h1>
+  
+      {/* Profile and Logout Section */}
+      <div className="flex flex-col sm:flex-row justify-end items-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
+          onClick={() => setProfileView(!profileView)}
+        >
+          {profileView ? "Hide Profile" : "Show Profile"}
+        </button>
+        <button
+          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
+          onClick={() => {logout()}}
+        >
+          Logout
+        </button>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col justify-between">
-          <h2 className="text-3xl mb-6 font-semibold text-blue-900">
+  
+      {/* Profile Section */}
+      {profileView && (
+        <div className="mb-6 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Profile</h2>
+          <div className="space-y-2">
+            <p className="text-lg">
+              <strong>Name:</strong> {user?.name}
+            </p>
+            <p className="text-lg">
+              <strong>Email:</strong> {user?.email}
+            </p>
+            <p className="text-lg">
+              <strong>Rollno:</strong> {user?.Rollno}
+            </p>
+          </div>
+        </div>
+      )}
+  
+      <div className="flex flex-col lg:flex-row justify-between gap-8">
+        {/* Request Outpass Form */}
+        <div className="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Request Outpass
           </h2>
-          <form onSubmit={handleSubmit}>
-            <label className="block mb-4">
-              <span className="text-xl">From Time:</span>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="flex flex-col">
+              <label htmlFor="fromTime" className="font-medium text-gray-700 mb-1">
+                From Time
+              </label>
               <input
                 type="datetime-local"
+                id="fromTime"
                 value={fromTime}
                 onChange={(e) => setFromTime(e.target.value)}
-                className="w-full p-3 text-xl border border-gray-300 rounded mt-2"
+                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 required
               />
-              <div></div>
-            </label>
-            <label className="block mb-4">
-              <span className="text-xl">To Time:</span>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="toTime" className="font-medium text-gray-700 mb-1">
+                To Time
+              </label>
               <input
                 type="datetime-local"
+                id="toTime"
                 value={toTime}
                 onChange={(e) => setToTime(e.target.value)}
-                className="w-full p-3 text-xl border border-gray-300 rounded mt-2"
+                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 required
               />
-            </label>
-            <label className="block mb-4">
-              <span className="text-xl">Reason:</span>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="reason" className="font-medium text-gray-700 mb-1">
+                Reason
+              </label>
               <textarea
                 value={reason}
                 onChange={(e) => {
                   if (e.target.value.length <= 30) {
-                    // Limit to 50 characters
+                    // Limit to 30 characters
                     setReason(e.target.value);
                   }
                 }}
-                className="w-full p-3 text-xl border border-gray-300 rounded mt-2"
+                className="w-full p-3 text-lg border border-gray-300 rounded mt-2"
                 rows="1"
                 required
               ></textarea>
               <span className="text-sm text-gray-600">
                 {30 - reason.length} characters remaining
               </span>
-            </label>
-
-            {error && <p className="text-red-600 text-xl mb-4">{error}</p>}
+            </div>
+            {error && (
+              <p className="text-red-500 text-sm font-medium">{error}</p>
+            )}
             {successMessage && (
-              <p className="text-green-600 text-xl mb-4">{successMessage}</p>
+              <p className="text-green-500 text-sm font-medium">
+                {successMessage}
+              </p>
             )}
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md transition-all duration-300 ease-in-out"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out w-full"
             >
-              Submit
+              Submit Request
             </button>
           </form>
         </div>
-        <div className="bg-white p-8 rounded-lg shadow-xl">
-          <div className="flex justify-between mb-6">
+  
+        {/* Outpass Tabs and List */}
+        <div className="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Entrypass Status</h2>
+          <div className="flex mb-6 gap-5">
             <button
-              onClick={() => setActiveTab("pending")}
-              className={`text-xl font-semibold px-4 py-2 rounded-lg ${
-                activeTab === "pending"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
+                activeTab === "pending" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
               }`}
+              onClick={() => setActiveTab("pending")}
             >
               Pending
             </button>
             <button
-              onClick={() => setActiveTab("approved")}
-              className={`text-xl font-semibold px-4 py-2 rounded-lg ${
-                activeTab === "approved"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
+                activeTab === "approved" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
               }`}
+              onClick={() => setActiveTab("approved")}
             >
               Approved
             </button>
             <button
-              onClick={() => setActiveTab("past")}
-              className={`text-xl font-semibold px-4 py-2 rounded-lg ${
-                activeTab === "past" ? "bg-blue-500 text-white" : "bg-gray-200"
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
+                activeTab === "past" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
               }`}
+              onClick={() => setActiveTab("past")}
             >
               Past
             </button>
@@ -383,6 +408,7 @@ function StudentDashboard() {
           {renderOutpassList()}
         </div>
       </div>
+  
       {selectedOutpass && (
         <Modal
           isOpen={!!selectedOutpass}
@@ -390,33 +416,33 @@ function StudentDashboard() {
           className="bg-white p-10 rounded-lg shadow-2xl max-w-xl mx-auto mt-20"
           overlayClassName="fixed inset-0 bg-black bg-opacity-50"
         >
-          <h2 className="text-3xl mb-6 font-semibold text-blue-900">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Outpass Details
           </h2>
-          <p className="text-xl mb-4">
+          <p className="text-lg mb-4">
             <strong>Name:</strong> {user.name}
           </p>
-          <p className="text-xl mb-4">
+          <p className="text-lg mb-4">
             <strong>Rollno:</strong> {user.Rollno}
           </p>
-          <p className="text-xl mb-4">
+          <p className="text-lg mb-4">
             <strong>Email:</strong> {user.email}
           </p>
-          <p className="text-xl mb-4">
+          <p className="text-lg mb-4">
             <strong>From:</strong>{" "}
             {new Date(selectedOutpass.fromTime).toLocaleString()}
           </p>
-          <p className="text-xl mb-4">
+          <p className="text-lg mb-4">
             <strong>To:</strong>{" "}
             {new Date(selectedOutpass.toTime).toLocaleString()}
           </p>
-          <p className="text-xl mb-4">
+          <p className="text-lg mb-4">
             <strong>Reason:</strong> {selectedOutpass.reason}
           </p>
-          <p className="text-xl mb-4">
+          <p className="text-lg mb-4">
             <strong>Status:</strong>
             <span
-              className={`px-3 py-1 rounded-full text-sm font-medium uppercase ${
+              className={`px-4 py-1 rounded-full text-sm font-semibold uppercase ${
                 selectedOutpass.status === "approved"
                   ? "bg-green-200 text-green-800"
                   : selectedOutpass.status === "pending"
@@ -427,10 +453,10 @@ function StudentDashboard() {
               {selectedOutpass.status}
             </span>
           </p>
-
+  
           <button
             onClick={() => setSelectedOutpass(null)}
-            className="bg-red-600 text-white p-3 text-xl rounded hover:bg-red-700 transition w-full"
+            className="bg-red-600 text-white p-3 text-xl rounded-lg hover:bg-red-700 transition-transform transform hover:scale-105 w-full"
           >
             Close
           </button>
@@ -438,6 +464,8 @@ function StudentDashboard() {
       )}
     </div>
   );
+  
+  
 }
 
 export default StudentDashboard;

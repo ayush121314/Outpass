@@ -12,16 +12,30 @@ function StudentLogin() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { login,fetchUserData } = useAuth();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/student/dashboard');
-    }
-  }, [isAuthenticated, navigate]);
+    const token = localStorage.getItem('token');
+    const fetchUser = async () => {
+      if (!token) {
+        // If no token, redirect to login
+        navigate('/student');
+      } else {
+        try {
+          // If token exists, fetch the user data
+          await fetchUserData(token);
+          navigate('/student/dashboard');
+        } catch (error) {
+          // If there's an error fetching user data, redirect to login
+          console.error('Error fetching user data:', error);
+          navigate('/student');
+        }
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleSectionToggle = (sectionName) => {
     setSection(sectionName);

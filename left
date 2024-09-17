@@ -1,4 +1,5 @@
 id verify 
 for easy navigation 3 buttons on top
-clear  backend
-admin -: change password 
+password length
+dont allow past outpass from today date
+generate pdf mobile

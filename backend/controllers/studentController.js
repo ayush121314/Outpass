@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const OTP = require('../models/Otp');
 const crypto = require('crypto');
 const sendOtp = require('../utils/sendOtp');
+const Outpass = require('../models/Outpass');
+
 
 exports.getStudentData = async (req, res) => {
   try {
@@ -97,7 +99,6 @@ exports.login = async (req, res) => {
   res.json({ token, student });
 };
 
-const Outpass = require('../models/Outpass');
 
 exports.requestOutpass = async (req, res) => {
   const { reason, fromTime, toTime } = req.body;
@@ -156,3 +157,4 @@ exports.getOutpassHistoryofstudent = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching outpass history' });
   }
 };
+ 

@@ -4,13 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import StudentDashboard from './StudentDashboard';
 
 function StudentPage() {
-  const { isAuthenticated, fetchUserData ,user} = useAuth();
+  const { fetchUserData ,user} = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!isAuthenticated) {
-      redirect('/student');
-    }
-  },[]);
+ 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const fetchUser = async () => {
@@ -28,14 +24,12 @@ function StudentPage() {
         }
       }
     };
-
     fetchUser();
-  }, [fetchUserData, navigate]);
+  }, []);
 
   
   return (
-    <div className="bg-slate-600 min-w-screen min-h-screen flex items-center justify-center ">
-      
+    <div className=" ">
       <StudentDashboard/>
       <br></br>
    

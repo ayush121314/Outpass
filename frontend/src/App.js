@@ -6,19 +6,20 @@ import StudentPage from "./Components/StudentPage";
 import StudentLogin from "./Components/StudentLogin";
 import AdminPage from "./Components/AdminPage";
 import AdminLogin from "./Components/AdminLogin";
-
-
-import AdmAdminDashboardnLogin from "./Components/AdminDashboard";
+import  VisitorLogin  from "./Components/VisitorLogin";
+import VisitorDashboard from "./Components/VisitorDashboard";
 
 function App() {
   return (
-    <div className="bg-black">
+    <div className="">
       <Router>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/student" element={<StudentLogin />} />
+            <Route path="/" element={<LoginPage />} /> 
+            <Route path="/visitor" element={<VisitorLogin/>} />
+            <Route path="/student" element={<StudentLogin/>} />
             <Route path="/student/dashboard" element={<StudentPage />} />
+            <Route path="/visitor/dashboard" element={<VisitorDashboard />} />
             <Route path="/admin" element={<AdminLogin/>} />
             <Route path="/admin/dashboard" element={<AdminPage/>}/>
           </Routes>
