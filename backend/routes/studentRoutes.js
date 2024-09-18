@@ -8,6 +8,8 @@ const {
   login,
   requestOutpass,
   getOutpassHistory,
+  getoutpass,
+  updateOutpassStatus
 } = require("../controllers/studentController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -21,5 +23,6 @@ router.post("/send-otp", sendOtp);
 router.post("/register", register);
 router.post("/login", login);
 router.get("/student-outpasses/:Rollno", getOutpassHistoryofstudent);
-
-module.exports = router;
+router.get('/outpass-requests',getoutpass);
+router.put('/outpass-requested/:_id', updateOutpassStatus);
+module.exports = router; 

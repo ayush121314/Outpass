@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-
+import { Link } from 'react-router-dom';
 function VisitorLogin() {
   const [section, setSection] = useState('login'); 
   const [visitorName, setVisitorName] = useState(''); // visitorName field
@@ -286,6 +286,11 @@ function VisitorLogin() {
             </form>
           )
         )}
+        <div className="text-center mt-4">
+          <Link to="/" className="bg-indigo-500 hover:scale-110 hover:bg-indigo-700 rounded-lg text-white p-2  inline-block">
+            Back to Home
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -171,3 +171,64 @@ exports.getOutpassHistory = async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch Entrypass history', error: err.message });
   }
 };
+
+
+exports.getoutpass = async (req, res) => {
+  try {
+    // Fetch all pending outpass requests and populate the student field with name, rollno, and email
+    const outpassRequests = await VisitorOutpass.find({ status: 'pending' })
+      .populate('Visitor', 'visitorName visitorContact visitoremail'); // Populate visitor field with name, rollno, and email
+
+    // Send the fetched data as a JSON response
+    res.status(200).json(outpassRequests);
+  } catch (error) {
+    console.error('Error fetching Entrypass requests:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.updateOutpassStatus = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { status } = req.body;
+
+    const updatedOutpass = await VisitorOutpass.findByIdAndUpdate(
+      _id,
+      { status },
+      { new: true } // Return the updated document
+    );
+    if (!updatedOutpass) {
+      return res.status(404).json({ message: 'Entrypass request not found' });
+    }
+    res.status(200).json(updatedOutpass);
+  } catch (error) {
+    console.error('Error updating Entrypass request status:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+exports.getOutpassHistoryofvisitor = async (req, res) => {
+  try {
+    // Extract roll number from request parameters
+    const { visitoremail } = req.params; // Assuming rollno is passed as a URL parameter
+
+    // Validate input
+    if (!visitoremail) {
+      return res.status(400).json({ error: 'email  is required' });
+    }
+    const visitor = await Visitor.findOne({ visitoremail: visitoremail });
+
+    // Query the database for outpasses related to the given roll number
+    const outpasses = await VisitorOutpass.find({ Visitor: visitor._id })  .populate('Visitor', 'visitorName visitorContact visitoremail');
+
+    // Check if any outpasses were found
+    if (outpasses.length === 0) {
+      return res.status(404).json({ message: 'No Entrypass found for this email' });
+    }
+
+    // Send the outpasses in the response
+    res.status(200).json(outpasses);
+  } catch (error) {
+    console.error('Error fetching Entrypass history:', error);
+    res.status(500).json({ error: 'An error occurred while fetching Entrypass history' });
+  }
+};

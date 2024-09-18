@@ -5,7 +5,7 @@ function LoginPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="w-screen bg-slate-600 h-screen flex items-center justify-center">
+    <div className="w-screen bg-slate-600 min-h-screen h-full py-5 flex items-center justify-center">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-[100px]">
        
         {/* Student Login */}

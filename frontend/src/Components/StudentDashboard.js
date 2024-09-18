@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';  // Import Lintk for navigation
+
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Modal from "react-modal";
@@ -86,7 +88,6 @@ function StudentDashboard() {
       }
 
       const data = await response.json();
-
       // Update the outpassRequests state with the new outpass
       setOutpassRequests([...outpassRequests, data.outpass]);
 
@@ -264,7 +265,7 @@ function StudentDashboard() {
         </div>
       </div>
     );
-  };
+  }; 
 
   return (
     <div className="p-4 sm:p-6 bg-gray-100 min-h-screen">
@@ -280,6 +281,11 @@ function StudentDashboard() {
         >
           {profileView ? "Hide Profile" : "Show Profile"}
         </button>
+        <Link to="/">
+        <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+          Back to Home
+        </button>
+      </Link>
         <button
           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
           onClick={() => {logout()}}

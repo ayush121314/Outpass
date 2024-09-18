@@ -157,4 +157,40 @@ exports.getOutpassHistoryofstudent = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching outpass history' });
   }
 };
- 
+
+exports.getoutpass = async (req, res) => {
+  try {
+    // Fetch all pending outpass requests and populate the student field with name, rollno, and email
+    const outpassRequests = await Outpass.find({ status: 'pending' })
+      .populate('student', 'name Rollno email'); // Populate student field with name, rollno, and email
+
+    // Send the fetched data as a JSON response
+    res.status(200).json(outpassRequests);
+  } catch (error) {
+    console.error('Error fetching outpass requests:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.updateOutpassStatus = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { status } = req.body;
+
+  
+    const updatedOutpass = await Outpass.findByIdAndUpdate(
+      _id,
+      { status },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedOutpass) {
+      return res.status(404).json({ message: 'Outpass request not found' });
+    }
+
+    res.status(200).json(updatedOutpass);
+  } catch (error) {
+    console.error('Error updating outpass request status:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};

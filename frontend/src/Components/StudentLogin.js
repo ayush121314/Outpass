@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 function StudentLogin() {
@@ -12,7 +12,7 @@ function StudentLogin() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const { login,fetchUserData } = useAuth();
+  const { login, fetchUserData } = useAuth();
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -20,15 +20,12 @@ function StudentLogin() {
     const token = localStorage.getItem('token');
     const fetchUser = async () => {
       if (!token) {
-        // If no token, redirect to login
         navigate('/student');
       } else {
         try {
-          // If token exists, fetch the user data
           await fetchUserData(token);
           navigate('/student/dashboard');
         } catch (error) {
-          // If there's an error fetching user data, redirect to login
           console.error('Error fetching user data:', error);
           navigate('/student');
         }
@@ -39,8 +36,8 @@ function StudentLogin() {
 
   const handleSectionToggle = (sectionName) => {
     setSection(sectionName);
-    setError(''); // Clear error when toggling sections
-    setOtpSent(false); // Reset OTP state when toggling sections
+    setError('');
+    setOtpSent(false);
   };
 
   const handleNameChange = (e) => setName(e.target.value);
@@ -53,34 +50,25 @@ function StudentLogin() {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Check if the user already exists
       const userCheckResponse = await fetch(`${apiUrl}/api/student/check-existence`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
   
       const userCheckData = await userCheckResponse.json();
-  
       if (userCheckData.exists) {
         setError('User already exists. Please login.');
         return;
       }
   
-      // If the user does not exist, proceed to send OTP
       const otpResponse = await fetch(`${apiUrl}/api/student/send-otp`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
   
-      if (!otpResponse.ok) {
-        throw new Error('Error sending OTP.');
-      }
+      if (!otpResponse.ok) throw new Error('Error sending OTP.');
   
       setOtpSent(true);
       setError('');
@@ -93,15 +81,11 @@ function StudentLogin() {
     try {
       const otpResponse = await fetch(`${apiUrl}/api/student/send-otp`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
 
-      if (!otpResponse.ok) {
-        throw new Error('Error resending OTP.');
-      }
+      if (!otpResponse.ok) throw new Error('Error resending OTP.');
 
       setError('OTP resent successfully.');
     } catch (err) {
@@ -118,15 +102,11 @@ function StudentLogin() {
     try {
       const response = await fetch(`${apiUrl}/api/student/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, otp, password,Rollno }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, otp, password, Rollno }),
       });
 
-      if (!response.ok) {
-        throw new Error('Invalid OTP or other registration error.');
-      }
+      if (!response.ok) throw new Error('Invalid OTP or other registration error.');
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
@@ -142,15 +122,11 @@ function StudentLogin() {
     try {
       const response = await fetch(`${apiUrl}/api/student/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
-        throw new Error('Invalid email or password.');
-      }
+      if (!response.ok) throw new Error('Invalid email or password.');
       
       const data = await response.json();
       localStorage.setItem('token', data.token);
@@ -164,7 +140,7 @@ function StudentLogin() {
   return (
     <div className="bg-slate-600 w-screen h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <div className="mb-4">
+        <div className="mb-4 flex">
           <button
             onClick={() => handleSectionToggle('login')}
             className={`w-1/2 p-2 ${section === 'login' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
@@ -190,7 +166,6 @@ function StudentLogin() {
               className="w-full p-2 mb-4 border border-gray-300 rounded"
               required
             />
-            
             <input
               type="password"
               placeholder="Enter your password"
@@ -200,10 +175,7 @@ function StudentLogin() {
               required
             />
             {error && <p className="text-red-500">{error}</p>}
-            <button
-              type="submit"
-              className="bg-blue-500 text-white w-full p-2 rounded"
-            >
+            <button type="submit" className="bg-blue-500 text-white w-full p-2 rounded">
               Login
             </button>
           </form>
@@ -219,7 +191,7 @@ function StudentLogin() {
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
                 required
               />
-               <input
+              <input
                 type="text"
                 placeholder="Enter your Roll no"
                 value={Rollno}
@@ -236,10 +208,7 @@ function StudentLogin() {
                 required
               />
               {error && <p className="text-red-500">{error}</p>}
-              <button
-                type="submit"
-                className="bg-blue-500 text-white w-full p-2 rounded"
-              >
+              <button type="submit" className="bg-blue-500 text-white w-full p-2 rounded">
                 Send OTP
               </button>
             </form>
@@ -271,22 +240,24 @@ function StudentLogin() {
                 required
               />
               {error && <p className="text-red-500">{error}</p>}
-              <button
-                type="submit"
-                className="bg-blue-500 text-white w-full p-2 rounded"
-              >
+              <button type="submit" className="bg-blue-500 text-white w-full p-2 rounded">
                 Verify OTP and Register
               </button>
               <button
                 type="button"
                 onClick={handleResendOtp}
-                className="bg-gray-500 hover:bg-blue-400 text-white w-full p-2 mt-2 rounded"
+                className="bg-gray-500 hover:bg-blue-400 text-white w-full p-2 rounded mt-4"
               >
                 Resend OTP
               </button>
             </form>
           )
         )}
+        <div className="text-center mt-4">
+          <Link to="/" className="bg-indigo-500 hover:scale-110 hover:bg-indigo-700 rounded-lg text-white p-2  inline-block">
+            Back to Home
+          </Link>
+        </div>
       </div>
     </div>
   );

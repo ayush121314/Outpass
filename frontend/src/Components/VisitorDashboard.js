@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import jsPDF from "jspdf";
 import "jspdf-autotable"; // Import the autoTable
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';  // Import Lintk for navigation
 
 Modal.setAppElement("#root");
 
@@ -74,8 +75,8 @@ function VisitorDashboard() {
     }
 
     const hasOverlap = outpassRequests.some((outpass) => {
-      const outpassFromTime = new Date(outpass.fromTime);
-      const outpassToTime = new Date(outpass.toTime);
+      const outpassFromTime = new Date(outpass?.fromTime);
+      const outpassToTime = new Date(outpass?.toTime);
       const newFromTime = new Date(fromTime);
       const newToTime = new Date(toTime);
 
@@ -107,7 +108,8 @@ function VisitorDashboard() {
       }
 
       const data = await response.json();
-      setOutpassRequests([...outpassRequests, data.outpass]);
+      console.log("hello",data.visitorOutpass);
+      setOutpassRequests([...outpassRequests, data.visitorOutpass]);
       setSuccessMessage("Entrypass request submitted successfully!");
       setFromTime("");
       setToTime("");
@@ -160,10 +162,10 @@ function VisitorDashboard() {
     doc.setFont("helvetica", "normal");
     doc.setTextColor(0, 0, 0);
     const outpassDetails = [
-      `From: ${new Date(outpass.fromTime).toLocaleString()}`,
-      `To: ${new Date(outpass.toTime).toLocaleString()}`,
-      `Reason: ${outpass.reason}`,
-      `Status: ${outpass.status}`,
+      `From: ${new Date(outpass?.fromTime).toLocaleString()}`,
+      `To: ${new Date(outpass?.toTime).toLocaleString()}`,
+      `Reason: ${outpass?.reason}`,
+      `Status: ${outpass?.status}`,
     ];
     outpassDetails.forEach((line, index) => {
       doc.text(line, 20, 95 + index * 10);
@@ -174,20 +176,20 @@ function VisitorDashboard() {
     doc.setTextColor(100, 100, 100);
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, 20, 150);
 
-    const formattedDate = new Date(outpass.fromTime)
+    const formattedDate = new Date(outpass?.fromTime)
       .toISOString()
       .replace(/[-T:\.Z]/g, "");
     doc.save(`${user.visitorName}-outpass-${formattedDate}.pdf`);
   };
 
   const approvedOutpasses = outpassRequests.filter(
-    (outpass) => outpass.status === "approved"
+    (outpass) => outpass?.status === "approved"
   );
   const pendingOutpasses = outpassRequests.filter(
-    (outpass) => outpass.status === "pending"
+    (outpass) => outpass?.status === "pending"
   );
   const pastOutpasses = outpassRequests.filter(
-    (outpass) => new Date(outpass.toTime) < new Date()
+    (outpass) => new Date(outpass?.toTime) < new Date()
   );
 
   const renderOutpassList = () => {
@@ -219,19 +221,19 @@ function VisitorDashboard() {
             <ul className="space-y-4">
               {outpasses.map((outpass) => (
                 <li
-                  key={outpass._id}
+                  key={outpass?._id}
                   className="p-4 border border-gray-300 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
                 >
                   <p className="text-lg font-medium">
                     <strong>From:</strong>{" "}
-                    {new Date(outpass.fromTime).toLocaleString()}
+                    {new Date(outpass?.fromTime).toLocaleString()}
                   </p>
                   <p className="text-lg font-medium">
                     <strong>To:</strong>{" "}
-                    {new Date(outpass.toTime).toLocaleString()}
+                    {new Date(outpass?.toTime).toLocaleString()}
                   </p>
                   <p className="text-lg font-medium">
-                    <strong>Reason:</strong> {outpass.reason}
+                    <strong>Reason:</strong> {outpass?.reason}
                   </p>
                   <p className="text-lg font-medium flex items-center">
                     <span className="mr-2 font-bold">Status:</span>
@@ -244,7 +246,7 @@ function VisitorDashboard() {
                           : "bg-red-200 text-red-800"
                       }`}
                     >
-                      {outpass.status}
+                      {outpass?.status}
                     </span>
                   </p>
                   <div className="flex justify-end mt-4">
@@ -281,14 +283,19 @@ function VisitorDashboard() {
       {/* Profile and Logout Section */}
       <div className="flex flex-col sm:flex-row justify-end items-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
+          className="bg-blue-00 hover:bg-blue-600 bg-blue-500 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
           onClick={() => setProfileView(!profileView)}
         >
           {profileView ? "Hide Profile" : "Show Profile"}
         </button>
+        <Link to="/">
+        <button className="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+          Back to Home
+        </button>
+      </Link>
         <button
           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
-          onClick={() => setProfileView(false)}
+          onClick={() => visitorlogout()}
         >
           Logout
         </button>

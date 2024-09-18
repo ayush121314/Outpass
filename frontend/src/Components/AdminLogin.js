@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';  // Import Link for navigation
 
 function AdminLogin() {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -63,7 +64,7 @@ function AdminLogin() {
             <input
               id="email"
               type="email"
-              placeholder='credential -: admin1@gmail.com'
+              placeholder="credential -: admin1@gmail.com"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -76,7 +77,7 @@ function AdminLogin() {
             </label>
             <input
               id="password"
-              placeholder='credential -: admin1password'
+              placeholder="credential -: admin1password"
               type="password"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={password}
@@ -91,9 +92,19 @@ function AdminLogin() {
             Login
           </button>
         </form>
+
+        {/* Back to Home Button */}
+        <div className="mt-6 text-center">
+          <Link to="/">
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+              Back to Home
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
+
 }
 
 export default AdminLogin;
