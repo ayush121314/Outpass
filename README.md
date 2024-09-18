@@ -1,6 +1,6 @@
 Here are some images from the project:
 
-1. ![Image 1](./images/1 .png)
+1. ![Image 1](./images/1.png)
 2. ![Image 2](./images/2.png)
 3. ![Image 3](./images/3.png)
 4. ![Image 4](./images/4.png)
