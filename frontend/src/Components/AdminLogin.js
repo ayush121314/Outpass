@@ -102,14 +102,15 @@ function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <Link
-              to="/"
-              className="inline-flex items-center justify-center w-max bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
-            >
-              Back to Home
-            </Link>
-          </div>
+        <div className="mt-6 text-center">
+  <a
+    href="https://outpass-zeta.vercel.app/"
+    className="inline-flex items-center justify-center w-max bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300"
+  >
+    Back to Home
+  </a>
+</div>
+
         </div>
 
         {/* Right side - Illustration */}
