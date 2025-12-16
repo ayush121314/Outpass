@@ -10,7 +10,6 @@ Here are some images from the project:
 
 A comprehensive digital outpass management system for educational institutions, enabling students and visitors to request permissions for leaving campus, with an admin approval workflow.
 
-![Live Demo](https://outpass-zeta.vercel.app/)
 
 ---
 
