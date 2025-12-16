@@ -2,8 +2,6 @@ Here are some images from the project:
 
 1. ![Image 1](./images/1File.png)
 3. ![Image 3](./images/3File.png)
-4. ![Image 4](./images/4File.png)
-5. ![Image 5](./images/5File.png)
 6. ![Image 6](./images/6File.png)
 7. ![Image 7](./images/7File.png)
 8. ![Image 8](./images/8File.png)
