@@ -15,7 +15,7 @@ A comprehensive digital outpass management system for educational institutions, 
 
 ## 📋 Overview
 
-The Outpass Management System replaces traditional paper-based permission slips with a modern web application. Students and visitors can request outpasses digitally, while administrators can review and approve/reject requests in real-time. The system maintains a complete history of all requests with timestamped records.
+The Outpass Management System replaces traditional paper-based permission slips with a modern web application. Students and visitors can request outpasses digitally, while administrators can review and approve/reject requests in real-time. The system maintains a complete history of all requests with timestamped records
 
 ---
 
