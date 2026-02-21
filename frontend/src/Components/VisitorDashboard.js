@@ -238,10 +238,10 @@ function VisitorDashboard() {
                     <span className="mr-2 font-bold">Status:</span>
                     <span
                       className={`px-3 py-1 rounded-full text-sm font-medium ${outpass.status === "approved"
-                          ? "bg-green-200 text-green-800"
-                          : outpass.status === "pending"
-                            ? "bg-yellow-200 text-yellow-800"
-                            : "bg-red-200 text-red-800"
+                        ? "bg-green-200 text-green-800"
+                        : outpass.status === "pending"
+                          ? "bg-yellow-200 text-yellow-800"
+                          : "bg-red-200 text-red-800"
                         }`}
                     >
                       {outpass?.status}
@@ -286,11 +286,11 @@ function VisitorDashboard() {
         >
           {profileView ? "Hide Profile" : "Show Profile"}
         </button>
-        <Link to="/">
+        {/* <Link to="/">
           <button className="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
             Back to Home
           </button>
-        </Link>
+        </Link> */}
         <button
           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
           onClick={() => visitorlogout()}
@@ -451,10 +451,10 @@ function VisitorDashboard() {
             <strong>Status:</strong>
             <span
               className={`px-4 py-1 rounded-full text-sm font-semibold uppercase ${selectedOutpass.status === "approved"
-                  ? "bg-green-200 text-green-800"
-                  : selectedOutpass.status === "pending"
-                    ? "bg-yellow-200 text-yellow-800"
-                    : "bg-red-200 text-red-800"
+                ? "bg-green-200 text-green-800"
+                : selectedOutpass.status === "pending"
+                  ? "bg-yellow-200 text-yellow-800"
+                  : "bg-red-200 text-red-800"
                 }`}
             >
               {selectedOutpass.status}

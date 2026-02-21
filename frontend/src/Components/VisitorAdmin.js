@@ -20,7 +20,7 @@ export const VisitorAdmin = () => {
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setVisitorRequests(data);
-        
+
         setLoading(false);
       } catch (error) {
         console.error('Error fetching visitor requests:', error);
@@ -73,24 +73,24 @@ export const VisitorAdmin = () => {
         unit: 'mm',
         format: 'a4',
       });
-      
+
       const imgWidth = 190;
       const pageHeight = 295;
       const imgHeight = canvas.height * imgWidth / canvas.width;
       let heightLeft = imgHeight;
       let position = 0;
       const margin = 10;
-  
+
       pdf.addImage(imgData, 'PNG', margin, position + margin, imgWidth, imgHeight);
       heightLeft -= (pageHeight - 2 * margin);
-  
+
       while (heightLeft > 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
         pdf.addImage(imgData, 'PNG', margin, position + margin, imgWidth, imgHeight);
         heightLeft -= (pageHeight - 2 * margin);
       }
-  
+
       pdf.save(`Visitor_History--[${new Date()}].pdf`);
       input.style.width = originalWidth;
     });
@@ -116,11 +116,11 @@ export const VisitorAdmin = () => {
             >
               Logout
             </button>
-            <Link to="/">
+            {/* <Link to="/">
               <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
                 Home
               </button>
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>
@@ -174,7 +174,7 @@ export const VisitorAdmin = () => {
           </form>
         </div>
       )}
-      
+
       {viewMode === 'current' && (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg border-collapse">
@@ -193,13 +193,13 @@ export const VisitorAdmin = () => {
             <tbody>
               {filteredRequests.map(item => (
                 <tr key={item._id} className="border-b hover:bg-gray-50">
-                <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitorName}</td>
-                    <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitorContact}</td>
-                    <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitoremail}</td>
-                    <td className="border border-gray-300 py-3 px-4">{item.reason}</td>
-                    <td className="border border-gray-300 py-3 px-4">{new Date(item.fromTime).toLocaleString()}</td>
-                    <td className="border border-gray-300 py-3 px-4">{new Date(item.toTime).toLocaleString()}</td>
-                    <td className={`border border-gray-300 py-3 px-4 font-semibold ${item.status === 'approved' ? 'text-green-500' : item.status === 'rejected' ? 'text-red-500' : 'text-yellow-500'}`}>
+                  <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitorName}</td>
+                  <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitorContact}</td>
+                  <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitoremail}</td>
+                  <td className="border border-gray-300 py-3 px-4">{item.reason}</td>
+                  <td className="border border-gray-300 py-3 px-4">{new Date(item.fromTime).toLocaleString()}</td>
+                  <td className="border border-gray-300 py-3 px-4">{new Date(item.toTime).toLocaleString()}</td>
+                  <td className={`border border-gray-300 py-3 px-4 font-semibold ${item.status === 'approved' ? 'text-green-500' : item.status === 'rejected' ? 'text-red-500' : 'text-yellow-500'}`}>
                     {item.status}
                   </td>
                   {item.status === 'pending' && (
@@ -228,27 +228,27 @@ export const VisitorAdmin = () => {
             <table className="min-w-full bg-white shadow-md rounded-lg border-collapse">
               <thead className="text-white bg-blue-500">
                 <tr>
-                <th className="border border-gray-300 text-left py-3 px-4">Visitor Name</th>
-                <th className="border border-gray-300 text-left py-3 px-4">Visitor Contact</th>
-                <th className="border border-gray-300 text-left py-3 px-4">Visitor email</th>
-                <th className="border border-gray-300 text-left py-3 px-4">Visit Purpose</th>
-                <th className="border border-gray-300 text-left py-3 px-4">From Time</th>
-                <th className="border border-gray-300 text-left py-3 px-4">To Time</th>
-                <th className="border border-gray-300 text-left py-3 px-4">Status</th>
+                  <th className="border border-gray-300 text-left py-3 px-4">Visitor Name</th>
+                  <th className="border border-gray-300 text-left py-3 px-4">Visitor Contact</th>
+                  <th className="border border-gray-300 text-left py-3 px-4">Visitor email</th>
+                  <th className="border border-gray-300 text-left py-3 px-4">Visit Purpose</th>
+                  <th className="border border-gray-300 text-left py-3 px-4">From Time</th>
+                  <th className="border border-gray-300 text-left py-3 px-4">To Time</th>
+                  <th className="border border-gray-300 text-left py-3 px-4">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {visitorHistory.map(item => (
                   <tr key={item._id} className="border-b hover:bg-gray-50">
-                  <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitorName}</td>
+                    <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitorName}</td>
                     <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitorContact}</td>
                     <td className="border border-gray-300 py-3 px-4">{item.Visitor.visitoremail}</td>
                     <td className="border border-gray-300 py-3 px-4">{item.reason}</td>
                     <td className="border border-gray-300 py-3 px-4">{new Date(item.fromTime).toLocaleString()}</td>
                     <td className="border border-gray-300 py-3 px-4">{new Date(item.toTime).toLocaleString()}</td>
                     <td className={`border border-gray-300 py-3 px-4 font-semibold ${item.status === 'approved' ? 'text-green-500' : item.status === 'rejected' ? 'text-red-500' : 'text-yellow-500'}`}>
-                    {item.status}
-                  </td>
+                      {item.status}
+                    </td>
                   </tr>
                 ))}
               </tbody>

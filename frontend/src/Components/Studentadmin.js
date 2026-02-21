@@ -145,11 +145,11 @@ export const Studentadmin = () => {
             >
               Logout
             </button>
-            <Link to="/">
+            {/* <Link to="/">
               <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
                 Home
               </button>
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>
@@ -158,21 +158,19 @@ export const Studentadmin = () => {
           onClick={() => {
             setViewMode("current");
           }}
-          className={`py-2 px-4 rounded ${
-            viewMode === "current"
+          className={`py-2 px-4 rounded ${viewMode === "current"
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-700"
-          }`}
+            }`}
         >
           Current Outpass Requests
         </button>
         <button
           onClick={() => setViewMode("past")}
-          className={`py-2 px-4 rounded ${
-            viewMode === "past"
+          className={`py-2 px-4 rounded ${viewMode === "past"
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-700"
-          }`}
+            }`}
         >
           Student History
         </button>
@@ -265,13 +263,12 @@ export const Studentadmin = () => {
                     {new Date(item.toTime).toLocaleString()}
                   </td>
                   <td
-                    className={`border border-gray-300 py-3 px-4 font-semibold ${
-                      item.status === "approved"
+                    className={`border border-gray-300 py-3 px-4 font-semibold ${item.status === "approved"
                         ? "text-green-500"
                         : item.status === "rejected"
-                        ? "text-red-500"
-                        : "text-yellow-500"
-                    }`}
+                          ? "text-red-500"
+                          : "text-yellow-500"
+                      }`}
                   >
                     {item.status}
                   </td>
@@ -349,13 +346,12 @@ export const Studentadmin = () => {
                       {new Date(item.toTime).toLocaleString()}
                     </td>
                     <td
-                      className={`border border-gray-300 py-3 px-4 font-semibold ${
-                        item.status === "approved"
+                      className={`border border-gray-300 py-3 px-4 font-semibold ${item.status === "approved"
                           ? "text-green-500"
                           : item.status === "rejected"
-                          ? "text-red-500"
-                          : "text-yellow-500"
-                      }`}
+                            ? "text-red-500"
+                            : "text-yellow-500"
+                        }`}
                     >
                       {item.status}
                     </td>
