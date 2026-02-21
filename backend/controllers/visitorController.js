@@ -52,11 +52,11 @@ exports.registerVisitor = async (req, res) => {
 exports.checkExistence = async (req, res) => {
   const { visitoremail } = req.body;
   const visitor = await VisitorOutpass.findOne({ visitoremail });
-  
+
   if (visitor) {
     return res.json({ exists: true });
   }
-  
+
   res.json({ exists: false });
 };
 
@@ -86,6 +86,60 @@ exports.sendOtp = async (req, res) => {
     res.status(200).json({ message: 'OTP sent successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Error sending OTP', error: err.message });
+  }
+};
+
+exports.sendPasswordResetOtp = async (req, res) => {
+  const { visitoremail } = req.body;
+  const visitor = await Visitor.findOne({ visitoremail });
+
+  if (!visitor) {
+    return res.status(400).json({ message: 'User not found. Please register first.' });
+  }
+
+  // Generate a 6-digit OTP
+  const otp = crypto.randomInt(100000, 999999).toString();
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // OTP expires in 10 minutes
+
+  try {
+    const existingOtp = await OTP.findOne({ email: visitoremail });
+    if (existingOtp) {
+      await OTP.updateOne({ email: visitoremail }, { otp, expiresAt });
+    } else {
+      await OTP.create({ email: visitoremail, otp, expiresAt });
+    }
+
+    await sendOtp(visitoremail, otp);
+    res.status(200).json({ message: 'Password reset OTP sent successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error sending OTP', error: err.message });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { visitoremail, otp, newPassword } = req.body;
+
+  try {
+    const otpRecord = await OTP.findOne({ email: visitoremail, otp, expiresAt: { $gte: new Date() } });
+    if (!otpRecord) {
+      return res.status(400).json({ message: 'Invalid OTP or OTP expired.' });
+    }
+
+    const visitor = await Visitor.findOne({ visitoremail });
+    if (!visitor) {
+      return res.status(404).json({ message: 'Visitor not found' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    visitor.password = hashedPassword;
+    await visitor.save();
+
+    await OTP.deleteOne({ email: visitoremail });
+
+    res.status(200).json({ message: 'Password reset successful. You can now login.' });
+  } catch (err) {
+    console.error('Error resetting password:', err);
+    res.status(500).json({ message: 'Error resetting password' });
   }
 };
 
@@ -144,7 +198,7 @@ exports.getVisitorData = async (req, res) => {
 
 exports.requestOutpass = async (req, res) => {
   const { reason, fromTime, toTime } = req.body;
-  const visitorId = req.visitor._id; 
+  const visitorId = req.visitor._id;
   if (new Date(fromTime) >= new Date(toTime)) {
     return res.status(400).json({ message: 'From time must be earlier than to time.' });
   }
@@ -163,7 +217,7 @@ exports.requestOutpass = async (req, res) => {
 };
 
 exports.getOutpassHistory = async (req, res) => {
-  const visitorId = req.visitor._id; 
+  const visitorId = req.visitor._id;
   try {
     const visitorOutpasses = await VisitorOutpass.find({ Visitor: visitorId }).sort({ createdAt: -1 });
     return res.status(200).json({ visitorOutpasses });
@@ -218,7 +272,7 @@ exports.getOutpassHistoryofvisitor = async (req, res) => {
     const visitor = await Visitor.findOne({ visitoremail: visitoremail });
 
     // Query the database for outpasses related to the given roll number
-    const outpasses = await VisitorOutpass.find({ Visitor: visitor._id })  .populate('Visitor', 'visitorName visitorContact visitoremail');
+    const outpasses = await VisitorOutpass.find({ Visitor: visitor._id }).populate('Visitor', 'visitorName visitorContact visitoremail');
 
     // Check if any outpasses were found
     if (outpasses.length === 0) {

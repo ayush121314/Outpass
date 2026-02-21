@@ -57,6 +57,57 @@ exports.sendOtp = async (req, res) => {
   }
 };
 
+exports.sendPasswordResetOtp = async (req, res) => {
+  const { email } = req.body;
+  const student = await Student.findOne({ email });
+  if (!student) {
+    return res.status(400).json({ message: 'User not found. Please register first.' });
+  }
+  // Generate a 6-digit OTP
+  const otp = crypto.randomInt(100000, 999999).toString();
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // OTP expires in 10 minutes
+
+  try {
+    const existingOtp = await OTP.findOne({ email });
+    if (existingOtp) {
+      await OTP.updateOne({ email }, { otp, expiresAt });
+    } else {
+      await OTP.create({ email, otp, expiresAt });
+    }
+
+    await sendOtp(email, otp);
+    res.status(200).json({ message: 'Password reset OTP sent successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error sending OTP' });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  try {
+    const otpRecord = await OTP.findOne({ email, otp, expiresAt: { $gte: new Date() } });
+    if (!otpRecord) {
+      return res.status(400).json({ message: 'Invalid OTP or OTP expired' });
+    }
+
+    const student = await Student.findOne({ email });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    student.password = hashedPassword;
+    await student.save();
+
+    await OTP.deleteOne({ email });
+
+    res.status(200).json({ message: 'Password reset successful. You can now login.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error resetting password' });
+  }
+};
+
 exports.register = async (req, res) => {
   const { name, email, otp, password,Rollno } = req.body;
 
