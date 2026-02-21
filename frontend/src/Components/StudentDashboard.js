@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';  // Import Lintk for navigation
 
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";

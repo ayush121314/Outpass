@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { Link } from 'react-router-dom';
 export const VisitorAdmin = () => {
   const [visitorRequests, setVisitorRequests] = useState([]);
   const [loading, setLoading] = useState(true);

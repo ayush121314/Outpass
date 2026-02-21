@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { Link } from "react-router-dom";
 
 export const Studentadmin = () => {
   const [outpassRequests, setOutpassRequests] = useState([]);
@@ -159,8 +158,8 @@ export const Studentadmin = () => {
             setViewMode("current");
           }}
           className={`py-2 px-4 rounded ${viewMode === "current"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-700"
+            ? "bg-blue-500 text-white"
+            : "bg-gray-200 text-gray-700"
             }`}
         >
           Current Outpass Requests
@@ -168,8 +167,8 @@ export const Studentadmin = () => {
         <button
           onClick={() => setViewMode("past")}
           className={`py-2 px-4 rounded ${viewMode === "past"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-700"
+            ? "bg-blue-500 text-white"
+            : "bg-gray-200 text-gray-700"
             }`}
         >
           Student History
@@ -264,10 +263,10 @@ export const Studentadmin = () => {
                   </td>
                   <td
                     className={`border border-gray-300 py-3 px-4 font-semibold ${item.status === "approved"
-                        ? "text-green-500"
-                        : item.status === "rejected"
-                          ? "text-red-500"
-                          : "text-yellow-500"
+                      ? "text-green-500"
+                      : item.status === "rejected"
+                        ? "text-red-500"
+                        : "text-yellow-500"
                       }`}
                   >
                     {item.status}
@@ -347,10 +346,10 @@ export const Studentadmin = () => {
                     </td>
                     <td
                       className={`border border-gray-300 py-3 px-4 font-semibold ${item.status === "approved"
-                          ? "text-green-500"
-                          : item.status === "rejected"
-                            ? "text-red-500"
-                            : "text-yellow-500"
+                        ? "text-green-500"
+                        : item.status === "rejected"
+                          ? "text-red-500"
+                          : "text-yellow-500"
                         }`}
                     >
                       {item.status}

@@ -4,7 +4,6 @@ import Modal from "react-modal";
 import jsPDF from "jspdf";
 import "jspdf-autotable"; // Import the autoTable
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';  // Import Lintk for navigation
 
 Modal.setAppElement("#root");
 
