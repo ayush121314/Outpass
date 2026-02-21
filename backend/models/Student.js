@@ -10,7 +10,6 @@ const studentSchema = new Schema({
   Rollno: {
     type: String,
     required: true,
-    unique: true,
   },
   email: {
     type: String,
