@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import StudentDashboard from './StudentDashboard';
 
 function StudentPage() {
-  const { fetchUserData ,user} = useAuth();
+  const { fetchUserData } = useAuth();
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const fetchUser = async () => {
@@ -25,14 +25,14 @@ function StudentPage() {
       }
     };
     fetchUser();
-  }, []);
+  }, [fetchUserData, navigate]);
 
-  
+
   return (
     <div className=" ">
-      <StudentDashboard/>
+      <StudentDashboard />
       <br></br>
-   
+
     </div>
   );
 }

@@ -40,8 +40,7 @@ function VisitorDashboard() {
       }
     };
     fetchvisitordata();
-  },[]);
-
+  }, [fetcVisitordata, navigate]);
 
   useEffect(() => {
     const fetchOutpassHistory = async () => {
@@ -53,7 +52,7 @@ function VisitorDashboard() {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (!response.ok) { 
+        if (!response.ok) {
           throw new Error("Failed to fetch Entrypass history");
         }
         const data = await response.json();
@@ -108,7 +107,7 @@ function VisitorDashboard() {
       }
 
       const data = await response.json();
-      console.log("hello",data.visitorOutpass);
+      console.log("hello", data.visitorOutpass);
       setOutpassRequests([...outpassRequests, data.visitorOutpass]);
       setSuccessMessage("Entrypass request submitted successfully!");
       setFromTime("");
@@ -178,7 +177,7 @@ function VisitorDashboard() {
 
     const formattedDate = new Date(outpass?.fromTime)
       .toISOString()
-      .replace(/[-T:\.Z]/g, "");
+      .replace(/[-T:.Z]/g, "");
     doc.save(`${user.visitorName}-outpass-${formattedDate}.pdf`);
   };
 
@@ -238,13 +237,12 @@ function VisitorDashboard() {
                   <p className="text-lg font-medium flex items-center">
                     <span className="mr-2 font-bold">Status:</span>
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        outpass.status === "approved"
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${outpass.status === "approved"
                           ? "bg-green-200 text-green-800"
                           : outpass.status === "pending"
-                          ? "bg-yellow-200 text-yellow-800"
-                          : "bg-red-200 text-red-800"
-                      }`}
+                            ? "bg-yellow-200 text-yellow-800"
+                            : "bg-red-200 text-red-800"
+                        }`}
                     >
                       {outpass?.status}
                     </span>
@@ -279,7 +277,7 @@ function VisitorDashboard() {
       <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">
         Visitor Dashboard
       </h1>
-  
+
       {/* Profile and Logout Section */}
       <div className="flex flex-col sm:flex-row justify-end items-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
         <button
@@ -289,10 +287,10 @@ function VisitorDashboard() {
           {profileView ? "Hide Profile" : "Show Profile"}
         </button>
         <Link to="/">
-        <button className="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
-          Back to Home
-        </button>
-      </Link>
+          <button className="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+            Back to Home
+          </button>
+        </Link>
         <button
           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
           onClick={() => visitorlogout()}
@@ -300,7 +298,7 @@ function VisitorDashboard() {
           Logout
         </button>
       </div>
-  
+
       {/* Profile Section */}
       {profileView && (
         <div className="mb-6 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
@@ -318,7 +316,7 @@ function VisitorDashboard() {
           </div>
         </div>
       )}
-  
+
       {/* Main container for side-by-side display */}
       <div className="flex flex-col lg:flex-row justify-between gap-8">
         {/* Request Outpass Form */}
@@ -389,31 +387,28 @@ function VisitorDashboard() {
             </button>
           </form>
         </div>
-  
+
         {/* Outpass Tabs and List */}
         <div className="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Entrypass Status</h2>
           <div className="flex mb-6 gap-5">
             <button
-              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
-                activeTab === "pending" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${activeTab === "pending" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+                }`}
               onClick={() => setActiveTab("pending")}
             >
               Pending
             </button>
             <button
-              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
-                activeTab === "approved" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${activeTab === "approved" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+                }`}
               onClick={() => setActiveTab("approved")}
             >
               Approved
             </button>
             <button
-              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
-                activeTab === "past" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${activeTab === "past" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+                }`}
               onClick={() => setActiveTab("past")}
             >
               Past
@@ -455,18 +450,17 @@ function VisitorDashboard() {
           <p className="text-lg mb-4">
             <strong>Status:</strong>
             <span
-              className={`px-4 py-1 rounded-full text-sm font-semibold uppercase ${
-                selectedOutpass.status === "approved"
+              className={`px-4 py-1 rounded-full text-sm font-semibold uppercase ${selectedOutpass.status === "approved"
                   ? "bg-green-200 text-green-800"
                   : selectedOutpass.status === "pending"
-                  ? "bg-yellow-200 text-yellow-800"
-                  : "bg-red-200 text-red-800"
-              }`}
+                    ? "bg-yellow-200 text-yellow-800"
+                    : "bg-red-200 text-red-800"
+                }`}
             >
               {selectedOutpass.status}
             </span>
           </p>
-  
+
           <button
             onClick={() => setSelectedOutpass(null)}
             className="bg-red-600 text-white p-3 text-xl rounded-lg hover:bg-red-700 transition-transform transform hover:scale-105 w-full"
@@ -477,8 +471,8 @@ function VisitorDashboard() {
       )}
     </div>
   );
-  
-  
+
+
 }
 
 export default VisitorDashboard;

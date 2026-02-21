@@ -168,7 +168,7 @@ function StudentDashboard() {
     // Save the PDF
     const formattedDate = new Date(outpass.fromTime)
       .toISOString()
-      .replace(/[-T:\.Z]/g, "");
+      .replace(/[-T:.Z]/g, "");
     doc.save(`${user.Rollno}-outpass-${formattedDate}.pdf`);
   };
 
@@ -230,13 +230,12 @@ function StudentDashboard() {
                       Status:
                     </span>
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium uppercase ${
-                        outpass.status === "approved"
+                      className={`px-3 py-1 rounded-full text-sm font-medium uppercase ${outpass.status === "approved"
                           ? "bg-green-200 text-green-800"
                           : outpass.status === "pending"
-                          ? "bg-yellow-200 text-yellow-800"
-                          : "bg-red-200 text-red-800"
-                      }`}
+                            ? "bg-yellow-200 text-yellow-800"
+                            : "bg-red-200 text-red-800"
+                        }`}
                     >
                       {outpass.status}
                     </span>
@@ -265,14 +264,14 @@ function StudentDashboard() {
         </div>
       </div>
     );
-  }; 
+  };
 
   return (
     <div className="p-4 sm:p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center bg-gradient-to-r from-blue-800 to-blue-600  py-5 rounded-lg shadow-lg">
         Welcome, {user?.name}
       </h1>
-  
+
       {/* Profile and Logout Section */}
       <div className="flex flex-col sm:flex-row justify-end items-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
         <button
@@ -282,18 +281,18 @@ function StudentDashboard() {
           {profileView ? "Hide Profile" : "Show Profile"}
         </button>
         <Link to="/">
-        <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
-          Back to Home
-        </button>
-      </Link>
+          <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+            Back to Home
+          </button>
+        </Link>
         <button
           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out w-full sm:w-auto"
-          onClick={() => {logout()}}
+          onClick={() => { logout() }}
         >
           Logout
         </button>
       </div>
-  
+
       {/* Profile Section */}
       {profileView && (
         <div className="mb-6 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
@@ -311,7 +310,7 @@ function StudentDashboard() {
           </div>
         </div>
       )}
-  
+
       <div className="flex flex-col lg:flex-row justify-between gap-8">
         {/* Request Outpass Form */}
         <div className="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
@@ -381,31 +380,28 @@ function StudentDashboard() {
             </button>
           </form>
         </div>
-  
+
         {/* Outpass Tabs and List */}
         <div className="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-md transition-transform transform-gpu hover:scale-105">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Entrypass Status</h2>
           <div className="flex mb-6 gap-5">
             <button
-              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
-                activeTab === "pending" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${activeTab === "pending" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+                }`}
               onClick={() => setActiveTab("pending")}
             >
               Pending
             </button>
             <button
-              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
-                activeTab === "approved" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${activeTab === "approved" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+                }`}
               onClick={() => setActiveTab("approved")}
             >
               Approved
             </button>
             <button
-              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${
-                activeTab === "past" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className={`py-2 px-4 w-1/3 text-center rounded-lg transition-colors duration-200 ${activeTab === "past" ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+                }`}
               onClick={() => setActiveTab("past")}
             >
               Past
@@ -414,7 +410,7 @@ function StudentDashboard() {
           {renderOutpassList()}
         </div>
       </div>
-  
+
       {selectedOutpass && (
         <Modal
           isOpen={!!selectedOutpass}
@@ -448,18 +444,17 @@ function StudentDashboard() {
           <p className="text-lg mb-4">
             <strong>Status:</strong>
             <span
-              className={`px-4 py-1 rounded-full text-sm font-semibold uppercase ${
-                selectedOutpass.status === "approved"
+              className={`px-4 py-1 rounded-full text-sm font-semibold uppercase ${selectedOutpass.status === "approved"
                   ? "bg-green-200 text-green-800"
                   : selectedOutpass.status === "pending"
-                  ? "bg-yellow-200 text-yellow-800"
-                  : "bg-red-200 text-red-800"
-              }`}
+                    ? "bg-yellow-200 text-yellow-800"
+                    : "bg-red-200 text-red-800"
+                }`}
             >
               {selectedOutpass.status}
             </span>
           </p>
-  
+
           <button
             onClick={() => setSelectedOutpass(null)}
             className="bg-red-600 text-white p-3 text-xl rounded-lg hover:bg-red-700 transition-transform transform hover:scale-105 w-full"
@@ -470,8 +465,8 @@ function StudentDashboard() {
       )}
     </div>
   );
-  
-  
+
+
 }
 
 export default StudentDashboard;

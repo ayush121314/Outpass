@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       }
       const userData = await response.json();
       setUser(userData);
-     
+
     } catch (err) {
       console.error('Error fetching user data:', err);
       navigate('/student');
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Failed to fetch user data');
       }
       const userData = await response.json();
-      console.log("hii",userData)
+      console.log("hii", userData)
       setvisitoruser(userData);
     } catch (err) {
       console.error('Error fetching user data:', err);
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user,visitoruser,loginvisitor,fetcVisitordata,login, logout, fetchUserData,fetchAdmindata,adminuser,adminlogin,adminlogout,visitorlogout }}>
+    <AuthContext.Provider value={{ user, visitoruser, loginvisitor, fetcVisitordata, login, logout, fetchUserData, fetchAdmindata, adminuser, adminlogin, adminlogout, visitorlogout }}>
       {children}
     </AuthContext.Provider>
   );

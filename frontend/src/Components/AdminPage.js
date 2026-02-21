@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { AdminDashboard } from './AdminDashboard';
 
-function AdminPage()  {
-  const { fetchAdmindata} = useAuth();
+function AdminPage() {
+  const { fetchAdmindata } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token-admin');
-   
-     const fetchadmindata = async () => {
+
+    const fetchadmindata = async () => {
       if (!token) {
         // If no token, redirect to login
         navigate('/admin');
@@ -26,16 +26,16 @@ function AdminPage()  {
         }
       }
     };
-   
+
     fetchadmindata();
-  }, []);
-  
+  }, [fetchAdmindata, navigate]);
+
   return (
     <div className="bg-slate-600  min-w-screen min-h-screen flex items-center justify-center ">
-      <AdminDashboard/>
+      <AdminDashboard />
       <br></br>
-   
+
     </div>
   );
-  }
+}
 export default AdminPage;
